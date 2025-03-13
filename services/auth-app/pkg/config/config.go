@@ -28,7 +28,21 @@ type Config struct {
 
 	AllowImpersonation bool `yaml:"allow_impersonation" env:"AUTH_APP_ENABLE_IMPERSONATION" desc:"Allows admins to create app tokens for other users. Used for migration. Do NOT use in productive deployments." introductionVersion:"1.0.0"`
 
+	StorageDriver  string         `yaml:"storage_driver" env:"AUTH_APP_STORAGE_DRIVER" desc:"Driver to be used to persist the app tokes . Supported values are 'jsoncs3', 'json'." introductionVersion:"%%NEXT_PRODUCTION_VERSION%%"`
+	StorageDrivers StorageDrivers `yaml:"storage_drivers"`
+
 	Context context.Context `yaml:"-"`
+}
+
+type StorageDrivers struct {
+	JSONCS3 JSONCS3Driver `yaml:"jsoncs3"`
+}
+
+type JSONCS3Driver struct {
+	ProviderAddr     string `yaml:"provider_addr" env:"AUTH_APP_JSONCS3_PROVIDER_ADDR" desc:"GRPC address of the STORAGE-SYSTEM service." introductionVersion:"%%NEXT_PRODUCTION_VERSION%%"`
+	SystemUserID     string `yaml:"system_user_id" env:"OC_SYSTEM_USER_ID;AUTH_APP_JSONCS3_SYSTEM_USER_ID" desc:"ID of the OpenCloud STORAGE-SYSTEM system user. Admins need to set the ID for the STORAGE-SYSTEM system user in this config option which is then used to reference the user. Any reasonable long string is possible, preferably this would be an UUIDv4 format." introductionVersion:"%%NEXT_PRODUCTION_VERSION%%"`
+	SystemUserIDP    string `yaml:"system_user_idp" env:"OC_SYSTEM_USER_IDP;AUTH_APP_JSONCS3_SYSTEM_USER_IDP" desc:"IDP of the OpenCloud STORAGE-SYSTEM system user." introductionVersion:"%%NEXT_PRODUCTION_VERSION%%"`
+	SystemUserAPIKey string `yaml:"system_user_api_key" env:"OC_SYSTEM_USER_API_KEY;AUTH_APP_JSONCS3_SYSTEM_USER_API_KEY" desc:"API key for the STORAGE-SYSTEM system user." introductionVersion:"%%NEXT_PRODUCTION_VERSION%%"`
 }
 
 // Log defines the loging configuration

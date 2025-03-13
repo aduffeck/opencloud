@@ -36,10 +36,16 @@ func AuthAppConfigFromStruct(cfg *config.Config) map[string]interface{} {
 					},
 				},
 				"applicationauth": map[string]interface{}{
-					"driver": "json",
+					"driver": "jsoncs3",
 					"drivers": map[string]interface{}{
 						"json": map[string]interface{}{
 							"file": appAuthJSON,
+						},
+						"jsoncs3": map[string]interface{}{
+							"provider_addr":       cfg.StorageDrivers.JSONCS3.ProviderAddr,
+							"service_user_id":     cfg.StorageDrivers.JSONCS3.SystemUserID,
+							"service_user_idp":    cfg.StorageDrivers.JSONCS3.SystemUserIDP,
+							"machine_auth_apikey": cfg.StorageDrivers.JSONCS3.SystemUserAPIKey,
 						},
 					},
 				},

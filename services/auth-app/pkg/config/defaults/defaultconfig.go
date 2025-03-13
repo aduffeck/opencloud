@@ -44,6 +44,13 @@ func DefaultConfig() *config.Config {
 		Service: config.Service{
 			Name: "auth-app",
 		},
+		StorageDriver: "jsoncs3",
+		StorageDrivers: config.StorageDrivers{
+			JSONCS3: config.JSONCS3Driver{
+				ProviderAddr:  "eu.opencloud.api.storage-system",
+				SystemUserIDP: "internal",
+			},
+		},
 		Reva: shared.DefaultRevaConfig(),
 	}
 }
@@ -83,6 +90,14 @@ func EnsureDefaults(cfg *config.Config) {
 
 	if cfg.MachineAuthAPIKey == "" && cfg.Commons != nil && cfg.Commons.MachineAuthAPIKey != "" {
 		cfg.MachineAuthAPIKey = cfg.Commons.MachineAuthAPIKey
+	}
+
+	if cfg.StorageDrivers.JSONCS3.SystemUserAPIKey == "" && cfg.Commons != nil && cfg.Commons.SystemUserAPIKey != "" {
+		cfg.StorageDrivers.JSONCS3.SystemUserAPIKey = cfg.Commons.SystemUserAPIKey
+	}
+
+	if cfg.StorageDrivers.JSONCS3.SystemUserID == "" && cfg.Commons != nil && cfg.Commons.SystemUserID != "" {
+		cfg.StorageDrivers.JSONCS3.SystemUserID = cfg.Commons.SystemUserID
 	}
 
 	if cfg.TokenManager == nil && cfg.Commons != nil && cfg.Commons.TokenManager != nil {
