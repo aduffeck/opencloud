@@ -327,11 +327,6 @@ func NewService(ctx context.Context, options ...Option) (*Service, error) {
 		cfg.Audit.Commons = cfg.Commons
 		return audit.Execute(cfg.Audit)
 	})
-	areg(opts.Config.AuthApp.Service.Name, func(ctx context.Context, cfg *occfg.Config) error {
-		cfg.AuthApp.Context = ctx
-		cfg.AuthApp.Commons = cfg.Commons
-		return authapp.Execute(cfg.AuthApp)
-	})
 	areg(opts.Config.Policies.Service.Name, func(ctx context.Context, cfg *occfg.Config) error {
 		cfg.Policies.Context = ctx
 		cfg.Policies.Commons = cfg.Commons
